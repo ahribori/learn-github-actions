@@ -13,6 +13,17 @@ jobs:
         echo "Sleeping for 10"
         sleep 10
 
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}    
+        SLACK_CHANNEL: general
+        SLACK_ICON: https://avatars.githubusercontent.com/u/44036562?s=200&v=4
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_USERNAME: Github actions
+        SLACK_MESSAGE: 'Job1 Success.'
+
+
   job2:
     name: Job 2
     needs: job1
@@ -28,12 +39,12 @@ jobs:
       if: failure()
       uses: rtCamp/action-slack-notify@v2
       env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_ICON: https://github.githubassets.com/images/modules/site/features/actions-icon-actions.svg
-        SLACK_MESSAGE: 'Github action has triggerd :rocket:'
-        SLACK_USERNAME: Github actions
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}    
+        SLACK_CHANNEL: general
+        SLACK_ICON: https://avatars.githubusercontent.com/u/44036562?s=200&v=4
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_USERNAME: Github actions
+        SLACK_MESSAGE: 'Job2 failed.'
 
   job3:
     name: Job 3
