@@ -24,6 +24,16 @@ jobs:
         echo "Completed job 2, but triggering failure"
         exit 1
 
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_ICON: https://github.githubassets.com/images/modules/site/features/actions-icon-actions.svg
+        SLACK_MESSAGE: 'Github action has triggerd :rocket:'
+        SLACK_USERNAME: Github actions
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}    
+
   job3:
     name: Job 3
     needs: job2
@@ -33,3 +43,4 @@ jobs:
     - name: Will never run
       run: |
         echo "If you can read this, the experiment failed"
+
